@@ -24,8 +24,7 @@ module fir_filter #(
 
     // Accumulator for the filter output
     logic signed [DATA_WIDTH+COEFF_WIDTH-1:0] acc;
-
-    // Initialize shift register 
+    
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             for (int i = 0; i < N; i++) begin
@@ -39,15 +38,20 @@ module fir_filter #(
         end
     end
 
-    // Initialize accumulator
+    // Initialize shift register and accumulator
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
+            for (int i = 0; i < N; i++) begin
+                x_reg[i] <= 0;  // Reset all elements
+            end
             x_reg <= '{default: 0};
             acc <= 0;
             y_out <= 0;
         end else begin
-            // Shift the input samples in the register
-            x_reg <= '{x_in, x_reg[0:N-2]};
+           for (int i = N-1; i > 0; i--) begin
+               x_reg[i] <= x_reg[i-1];  // Shift the values
+           end
+           x_reg[0] <= x_in;  // Assign the new input to the first element
             
             // Compute the FIR filter output
             acc = 0;
