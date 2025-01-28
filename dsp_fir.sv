@@ -6,14 +6,14 @@
 `timescale 1ns/1ps
 
 module fir_filter #(
-    parameter N = 4,                           // Number of filter taps
-    parameter DATA_WIDTH = 16,                 // Width of input and output data
-    parameter COEFF_WIDTH = 16                 // Width of filter coefficients
+    parameter N = 4                           // Number of filter taps
+    ,parameter DATA_WIDTH = 16                // Width of input and output data
+    ,parameter COEFF_WIDTH = 16               // Width of filter coefficients
 ) (
-    input logic clk,                           // Clock
-    input logic rst,                           // Synchronous reset
-    input logic [DATA_WIDTH-1:0] x_in,         // Input sample
-    output logic [DATA_WIDTH-1:0] y_out        // Filtered output
+    input logic clk                           // Clock
+    ,input logic rst                          // Synchronous reset
+    ,input logic [DATA_WIDTH-1:0] x_in        // Input sample
+    ,output logic [DATA_WIDTH-1:0] y_out      // Filtered output
 );
 
     // Filter coefficients (constant values)
